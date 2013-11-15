@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- <appwidget-provider
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="250dip"
+    android:minHeight="40dip"
+    android:initialLayout="@layout/forecastwidget"
+    android:updatePeriodMillis="10800000"
+    android:configure="@string/Configure"
+    /> -->
+<appwidget-provider
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="110dip"
+    android:minHeight="40dip"
+    android:initialLayout="@layout/widget_forecast_ics"
+    android:updatePeriodMillis="10800000"
+    />
