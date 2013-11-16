@@ -16,6 +16,7 @@ import jp.library.weatherforecast.WeatherForecast.*;
 import jp.widgets.kumamon.forecast.R;
 import jp.widgets.kumamon.lib.*;
 import static jp.widgets.kumamon.forecast.ForecastWidgetConstant.*;
+
 import android.annotation.TargetApi;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -132,21 +133,6 @@ public class KumamonForecastWidget extends WidgetBase {
 					});
 				}
 			}
-			if (ACTION_FILLIN.equals(intent.getAction())) {
-				Bundle extras = intent.getExtras();
-				if (extras != null) {
-					int appWidgetId = extras.getInt(
-							AppWidgetManager.EXTRA_APPWIDGET_ID,
-							AppWidgetManager.INVALID_APPWIDGET_ID);
-					Intent congigIntent = new Intent(context, jp.widgets.kumamon.forecast.ForecastWidgetConfigure.class);
-					congigIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-					congigIntent.putExtra(APPWIDGET_CALLER, TAG);
-					congigIntent.setAction(APPWIDGET_CONFIGURE);
-					PendingIntent pendingIntent = PendingIntent.getActivity(
-							context, appWidgetId, congigIntent, 0);
-					pendingIntent.send(context, appWidgetId, congigIntent);
-				}
-			}
 		} catch (Exception ex) {
 			Log.e(TAG, ex.getMessage());
 		}
@@ -169,15 +155,15 @@ public class KumamonForecastWidget extends WidgetBase {
 					.toUri(Intent.URI_INTENT_SCHEME)));
 			remoteViews.setRemoteAdapter(R.id.forecast_widget_StackView, stackViewIntent);
 
-			Intent fillInIntent = new Intent(context, KumamonForecastWidget.class);
-			fillInIntent.setAction(ACTION_FILLIN);
-			fillInIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-					appWidgetId);
-			PendingIntent fillInPendingIntent = PendingIntent.getBroadcast(
-					context, appWidgetId, fillInIntent,
-					PendingIntent.FLAG_UPDATE_CURRENT);
-			remoteViews.setPendingIntentTemplate(R.id.forecast_widget_StackView,
-					fillInPendingIntent);
+			// ボタンが押された時に発行されるインテントを準備する
+			Intent congigIntent = new Intent(context, jp.widgets.kumamon.forecast.ForecastWidgetConfigure.class);
+			congigIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+			congigIntent.putExtra(APPWIDGET_CALLER, APPWIDGET_STACK);
+			congigIntent.setAction(APPWIDGET_CONFIGURE);
+			PendingIntent pendingIntent = PendingIntent.getActivity(context,
+					appWidgetId, congigIntent, 0);
+			remoteViews.setOnClickPendingIntent(R.id.forecast_icon_ImageView,
+					pendingIntent);
 
 			AppWidgetManager appWidgetManager = AppWidgetManager
 					.getInstance(context);

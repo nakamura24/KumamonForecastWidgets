@@ -159,7 +159,7 @@ public class KumamonForecastWidget extends WidgetBase {
 			if (weeklyForecasts == null || weeklyForecasts.size() == 0)
 				return;
 			remoteViews.setTextViewText(R.id.forecast_date_TextView1, weeklyForecasts.get(0).Date);
-			remoteViews.setImageViewResource(R.id.forecast_imageView1,
+			remoteViews.setImageViewResource(R.id.forecast_ImageView1,
 					mWeatherForecast.getBitmapResource(weeklyForecasts.get(0).Forecast));
 			remoteViews.setTextViewText(R.id.forecast_max_TextView1,
 					weeklyForecasts.get(0).MaxTemp);
@@ -168,7 +168,7 @@ public class KumamonForecastWidget extends WidgetBase {
 			remoteViews.setTextViewText(R.id.forecast_probability_TextView1,
 					weeklyForecasts.get(0).Probability);
 			remoteViews.setTextViewText(R.id.forecast_date_TextView2, weeklyForecasts.get(1).Date);
-			remoteViews.setImageViewResource(R.id.forecast_imageView2,
+			remoteViews.setImageViewResource(R.id.forecast_ImageView2,
 					mWeatherForecast.getBitmapResource(weeklyForecasts.get(1).Forecast));
 			remoteViews.setTextViewText(R.id.forecast_max_TextView2,
 					weeklyForecasts.get(1).MaxTemp);
