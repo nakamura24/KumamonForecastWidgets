@@ -12,7 +12,6 @@ package jp.widgets.kumamon.forecast;
 import jp.library.weatherforecast.WeatherForecast;
 import jp.widgets.kumamon.lib.*;
 import static jp.widgets.kumamon.forecast.ForecastWidgetConstant.*;
-
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
@@ -20,6 +19,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.LinearLayout.LayoutParams;
 
@@ -47,58 +47,69 @@ public class ForecastWidgetConfigure extends Activity {
 				mCaller = extras.getString(APPWIDGET_CALLER);
 				Log.d(TAG, "mAppWidgetId=" + String.valueOf(mAppWidgetId));
 				StaticHash hash = new StaticHash(this);
-				mId = hash.get(LOCATEID,
-						String.valueOf(mAppWidgetId), mId);
-				mPosition = hash.get(POSITION,
-						String.valueOf(mAppWidgetId), mPosition);
+				mId = hash.get(LOCATEID, String.valueOf(mAppWidgetId), mId);
+				mPosition = hash.get(POSITION, String.valueOf(mAppWidgetId),
+						mPosition);
 			}
 			mWeatherForecast = new WeatherForecast();
-			
+
 			setContentView(R.layout.widget_forecast_configure);
 			getWindow().setLayout(LayoutParams.MATCH_PARENT,
 					LayoutParams.WRAP_CONTENT);
 
+			ArrayAdapter<String> forecast_location_adapter = new ArrayAdapter<String>(
+					this, android.R.layout.simple_spinner_item);
+			forecast_location_adapter
+					.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			// アイテムを追加します
+			for (int i = 0; i < mWeatherForecast.getLocationIDs().length; i++) {
+				forecast_location_adapter.add(mWeatherForecast
+						.getLocationName(mWeatherForecast.getLocationIDs()[i]));
+			}
 			Spinner forecast_location_Spinner = (Spinner) findViewById(R.id.forecast_location_Spinner);
-			// Spinner のアイテムが選択された時に呼び出されるコールバックを登録
-			forecast_location_Spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-				// アイテムが選択された時の動作
-				public void onItemSelected(AdapterView<?> parent, View view,
-						int position, long id) {
-					// Spinner を取得
-					Spinner spinner = (Spinner) parent;
-					// 選択されたアイテムのテキストを取得
-					mPosition = spinner.getSelectedItemPosition();
-					mId = mWeatherForecast.getLocationIDs()[mPosition];
-				}
+	        // アダプターを設定します
+			forecast_location_Spinner.setAdapter(forecast_location_adapter);
 
-				// 何も選択されなかった時の動作
-				public void onNothingSelected(AdapterView<?> parent) {
-					mPosition = 63 - 1;
-					mId = 4410;
-				}
-			});
+			// Spinner のアイテムが選択された時に呼び出されるコールバックを登録
+			forecast_location_Spinner
+					.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+						// アイテムが選択された時の動作
+						public void onItemSelected(AdapterView<?> parent,
+								View view, int position, long id) {
+							// Spinner を取得
+							Spinner spinner = (Spinner) parent;
+							// 選択されたアイテムのテキストを取得
+							mPosition = spinner.getSelectedItemPosition();
+							mId = mWeatherForecast.getLocationIDs()[mPosition];
+						}
+
+						// 何も選択されなかった時の動作
+						public void onNothingSelected(AdapterView<?> parent) {
+							mPosition = 63 - 1;
+							mId = 4410;
+						}
+					});
 			forecast_location_Spinner.setSelection(mPosition);
 			Log.i(TAG, "onCreate end");
 		} catch (Exception e) {
 		}
 	}
 
-
 	// Button の onClick で実装
 	public void onOKButtonClick(View v) {
 		try {
 			Log.i(TAG, "onOKButtonClick");
 			StaticHash hash = new StaticHash(this);
-			hash.put(LOCATEID,
-					String.valueOf(mAppWidgetId), mId);
-			hash.put(POSITION,
-					String.valueOf(mAppWidgetId), mPosition);
+			hash.put(LOCATEID, String.valueOf(mAppWidgetId), mId);
+			hash.put(POSITION, String.valueOf(mAppWidgetId), mPosition);
 			Intent intent = null;
-			if(APPWIDGET_NORMAL.equals(mCaller)){
+			if (APPWIDGET_NORMAL.equals(mCaller)) {
 				intent = new Intent(this, KumamonForecastWidget.class);
 			}
-			if(APPWIDGET_STACK.equals(mCaller)){
-				intent = new Intent(this, jp.widgets.kumamon.forecast.ics.KumamonForecastWidget.class);
+			if (APPWIDGET_STACK.equals(mCaller)) {
+				intent = new Intent(
+						this,
+						jp.widgets.kumamon.forecast.ics.KumamonForecastWidget.class);
 			}
 			intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
 			intent.putExtra(LOCATEID, mId);
