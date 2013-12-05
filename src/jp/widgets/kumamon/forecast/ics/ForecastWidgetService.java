@@ -43,7 +43,7 @@ public class ForecastWidgetService extends RemoteViewsService {
 			RemoteViewsService.RemoteViewsFactory {
 		private Context mContext;
 		private int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
-		private String mLocation;
+		private String mLocationName;
 
 		public ForecastRemoteViewsFactory(Context context, Intent intent) {
 			mContext = context.getApplicationContext();
@@ -66,7 +66,7 @@ public class ForecastWidgetService extends RemoteViewsService {
 				int id = hash.get(LOCATEID,
 						String.valueOf(mAppWidgetId), INIT_ID);
 				mWeatherForecast = new WeatherForecast();
-				mLocation = mWeatherForecast.getLocationName(id);
+				mLocationName = mWeatherForecast.getLocationName(id);
 				mWeeklyForecasts = mWeatherForecast.getWeeklyForecast(mContext,
 						id);
 
@@ -99,7 +99,7 @@ public class ForecastWidgetService extends RemoteViewsService {
 			int id = hash.get(LOCATEID,
 					String.valueOf(mAppWidgetId), INIT_ID);
 			mWeatherForecast = new WeatherForecast();
-			mLocation = mWeatherForecast.getLocationName(id);
+			mLocationName = mWeatherForecast.getLocationName(id);
 			mWeeklyForecasts = mWeatherForecast.getWeeklyForecast(mContext, id);
 		}
 
@@ -143,7 +143,7 @@ public class ForecastWidgetService extends RemoteViewsService {
 				if (mWeeklyForecasts.size() <= 0)
 					return remoteviews;
 				remoteviews.setTextViewText(R.id.forecast_location_TextView,
-						mLocation);
+						mLocationName);
 				remoteviews.setTextViewText(R.id.forecast_date_TextView,
 						mWeeklyForecasts.get(position).Date);
 				remoteviews.setImageViewResource(R.id.forecast_ImageView,
