@@ -13,4 +13,4 @@
     android:initialLayout="@layout/widget_forecast"
     android:minHeight="40dip"
     android:minWidth="250dip"
-    android:updatePeriodMillis="10800000" />
+    android:updatePeriodMillis="0" />
