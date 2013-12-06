@@ -54,9 +54,9 @@ public class KumamonForecastWidget extends WidgetBase {
 			StaticHash hash = new StaticHash(context);
 			for (int i = 0; i < appWidgetIds.length; i++) {
 				final int appWidgetId = appWidgetIds[i];
-				int id = hash.get(LOCATEID, String.valueOf(appWidgetId),
+				int id = hash.get(LOCATEID + TAG, String.valueOf(appWidgetId),
 						INIT_ID);
-				hash.put(LOCATEID, String.valueOf(appWidgetId), id);
+				hash.put(LOCATEID + TAG, String.valueOf(appWidgetId), id);
 				weatherForecast.setOnPostExecute(new OnPostExecute() {
 					@Override
 					public void onPostExecute() {
@@ -79,7 +79,7 @@ public class KumamonForecastWidget extends WidgetBase {
 			StaticHash hash = new StaticHash(context);
 			for (int i = 0; i < appWidgetIds.length; i++) {
 				Log.d(TAG, "onDeleted - " + String.valueOf(appWidgetIds[i]));
-				hash.remove(LOCATEID, String.valueOf(appWidgetIds[i]));
+				hash.remove(LOCATEID + TAG, String.valueOf(appWidgetIds[i]));
 				hash.remove(POSITION, String.valueOf(appWidgetIds[i]));
 			}
 		} catch (Exception ex) {
@@ -94,10 +94,10 @@ public class KumamonForecastWidget extends WidgetBase {
 		try {
 			context = context.getApplicationContext();
 			StaticHash hash = new StaticHash(context);
-			ArrayList<String> appWidgetIds = hash.keys(LOCATEID);
+			ArrayList<String> appWidgetIds = hash.keys(LOCATEID + TAG);
 			for (int i = 0; i < appWidgetIds.size(); i++) {
 				Log.d(TAG, "onDeleted - " + appWidgetIds);
-				hash.remove(LOCATEID, appWidgetIds.get(i));
+				hash.remove(LOCATEID + TAG, appWidgetIds.get(i));
 				hash.remove(POSITION, appWidgetIds.get(i));
 			}
 			Intent intent = new Intent(context, WidgetService.class);
@@ -120,7 +120,7 @@ public class KumamonForecastWidget extends WidgetBase {
 							AppWidgetManager.INVALID_APPWIDGET_ID);
 					int id = extras.getInt(LOCATEID, INIT_ID);
 					StaticHash hash = new StaticHash(context);
-					hash.put(LOCATEID, String.valueOf(appWidgetId), id);
+					hash.put(LOCATEID + TAG, String.valueOf(appWidgetId), id);
 					Log.d(TAG,
 							"CONFIG_DONE appWidgetId="
 									+ String.valueOf(appWidgetId) + "id="
@@ -158,7 +158,7 @@ public class KumamonForecastWidget extends WidgetBase {
 					pendingIntent);
 
 			StaticHash hash = new StaticHash(context);
-			int id = hash.get(LOCATEID, String.valueOf(appWidgetId), INIT_ID);
+			int id = hash.get(LOCATEID + TAG, String.valueOf(appWidgetId), INIT_ID);
 
 			remoteViews.setTextViewText(R.id.forecast_location_TextView,
 					weatherForecast.getLocationName(id));
@@ -227,11 +227,11 @@ public class KumamonForecastWidget extends WidgetBase {
 				Log.i(TAG, "mReceiver onReceive = " + intent.getAction());
 				if (Intent.ACTION_USER_PRESENT.equals(intent.getAction())) {
 					StaticHash hash = new StaticHash(context);
-					ArrayList<String> appWidgetIds = hash.keys(LOCATEID);
+					ArrayList<String> appWidgetIds = hash.keys(LOCATEID + TAG);
 					for (int i = 0; i < appWidgetIds.size(); i++) {
 						final int appWidgetId = Integer.parseInt(appWidgetIds
 								.get(i));
-						int id = hash.get(LOCATEID,
+						int id = hash.get(LOCATEID + TAG,
 								String.valueOf(appWidgetId), INIT_ID);
 						final WeatherForecast weatherForecast = new WeatherForecast();
 						weatherForecast.setOnPostExecute(new OnPostExecute() {
