@@ -13,23 +13,24 @@ public final class R {
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
  Default screen margins, per the Android Design guidelines. 
-
-         Customize dimensions originally defined in res/values/dimens.xml (such as
-         screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
-    
          */
         public static final int activity_horizontal_margin=0x7f050000;
         public static final int activity_vertical_margin=0x7f050001;
-        public static final int forecast_date_textSize=0x7f050005;
-        public static final int forecast_ics_date_textSize=0x7f050009;
-        public static final int forecast_ics_location_textSize=0x7f050008;
-        public static final int forecast_ics_probability_textSize=0x7f05000b;
-        public static final int forecast_ics_temp_textSize=0x7f05000a;
-        public static final int forecast_item_horizontal_margin=0x7f050003;
-        public static final int forecast_location_textSize=0x7f050004;
+        public static final int forecast_date_textSize=0x7f050004;
+        public static final int forecast_ics_date_textSize=0x7f050008;
+        public static final int forecast_ics_location_textSize=0x7f050007;
+        public static final int forecast_ics_probability_textSize=0x7f05000a;
+        public static final int forecast_ics_temp_textSize=0x7f050009;
+        public static final int forecast_item_horizontal_margin=0x7f05000b;
+        public static final int forecast_item_vertical_margin=0x7f05000c;
+        /**  Default screen margins, per the Android Design guidelines. 
+ Default screen margins, per the Android Design guidelines. 
+ Default screen margins, per the Android Design guidelines. 
+         */
+        public static final int forecast_location_textSize=0x7f050003;
         public static final int forecast_paddingLeft=0x7f050002;
-        public static final int forecast_probability_textSize=0x7f050007;
-        public static final int forecast_temp_textSize=0x7f050006;
+        public static final int forecast_probability_textSize=0x7f050006;
+        public static final int forecast_temp_textSize=0x7f050005;
     }
     public static final class drawable {
         public static final int forecast_icon=0x7f020000;
