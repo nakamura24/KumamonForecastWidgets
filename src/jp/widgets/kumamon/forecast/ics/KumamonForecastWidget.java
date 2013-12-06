@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import jp.library.weatherforecast.StaticHash;
 import jp.library.weatherforecast.WeatherForecast;
 import jp.library.weatherforecast.WeatherForecast.*;
+import jp.widgets.kumamon.forecast.ForecastWidgetConfigure;
 import jp.widgets.kumamon.forecast.R;
 import jp.widgets.kumamon.lib.*;
 import static jp.widgets.kumamon.forecast.ForecastWidgetConstant.*;
@@ -33,11 +34,9 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.RemoteViews;
 
-
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 public class KumamonForecastWidget extends WidgetBase {
 	public static final String TAG = "ics.WidgetWeekly";
-	private WeatherForecast mWeatherForecast;
 
 	@Override
 	public void onEnabled(Context context) {
@@ -52,25 +51,25 @@ public class KumamonForecastWidget extends WidgetBase {
 	}
 
 	@Override
-	public void onUpdate(final Context context, AppWidgetManager appWidgetManager,
-			int[] appWidgetIds) {
+	public void onUpdate(final Context context,
+			AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
 		Log.i(TAG, "onUpdate");
 		try {
-			mWeatherForecast = new WeatherForecast();
+			final WeatherForecast weatherForecast = new WeatherForecast();
 			StaticHash hash = new StaticHash(context);
 			for (int i = 0; i < appWidgetIds.length; i++) {
 				final int appWidgetId = appWidgetIds[i];
-				int id = hash.get(LOCATEID,
-						String.valueOf(appWidgetId), INIT_ID);
+				int id = hash.get(LOCATEID, String.valueOf(appWidgetId),
+						INIT_ID);
 				hash.put(LOCATEID, String.valueOf(appWidgetId), id);
-				mWeatherForecast.getForecast(context, id);
-				mWeatherForecast.setOnPostExecute(new OnPostExecute() {
+				weatherForecast.setOnPostExecute(new OnPostExecute() {
 					@Override
 					public void onPostExecute() {
-						updateAppWidget(context, appWidgetId);
+						updateAppWidget(context, appWidgetId, weatherForecast);
 					}
 				});
+				weatherForecast.getForecast(context, id);
 			}
 		} catch (Exception ex) {
 			Log.e(TAG, ex.getMessage());
@@ -86,13 +85,9 @@ public class KumamonForecastWidget extends WidgetBase {
 			StaticHash hash = new StaticHash(context);
 			for (int i = 0; i < appWidgetIds.length; i++) {
 				Log.d(TAG, "onDeleted - " + String.valueOf(appWidgetIds[i]));
-				hash.remove(LOCATEID,
-						String.valueOf(appWidgetIds[i]));
-				hash.remove(POSITION,
-						String.valueOf(appWidgetIds[i]));
+				hash.remove(LOCATEID, String.valueOf(appWidgetIds[i]));
+				hash.remove(POSITION, String.valueOf(appWidgetIds[i]));
 			}
-			Intent intent = new Intent(context, WidgetService.class);
-			context.stopService(intent);
 		} catch (Exception ex) {
 			Log.e(TAG, ex.getMessage());
 		}
@@ -105,13 +100,14 @@ public class KumamonForecastWidget extends WidgetBase {
 		try {
 			context = context.getApplicationContext();
 			StaticHash hash = new StaticHash(context);
-			ArrayList<String> appWidgetIds = hash
-					.keys(LOCATEID);
+			ArrayList<String> appWidgetIds = hash.keys(LOCATEID);
 			for (int i = 0; i < appWidgetIds.size(); i++) {
 				Log.d(TAG, "onDeleted - " + appWidgetIds);
 				hash.remove(LOCATEID, appWidgetIds.get(i));
 				hash.remove(POSITION, appWidgetIds.get(i));
 			}
+			Intent intent = new Intent(context, WidgetService.class);
+			context.stopService(intent);
 		} catch (Exception ex) {
 			Log.e(TAG, ex.getMessage());
 		}
@@ -135,14 +131,15 @@ public class KumamonForecastWidget extends WidgetBase {
 							"CONFIG_DONE appWidgetId="
 									+ String.valueOf(appWidgetId) + "id="
 									+ String.valueOf(id));
-					mWeatherForecast = new WeatherForecast();
-					mWeatherForecast.getForecast(context, id);
-					mWeatherForecast.setOnPostExecute(new OnPostExecute() {
+					final WeatherForecast weatherForecast = new WeatherForecast();
+					weatherForecast.setOnPostExecute(new OnPostExecute() {
 						@Override
 						public void onPostExecute() {
-							updateAppWidget(context, appWidgetId);
+							updateAppWidget(context, appWidgetId,
+									weatherForecast);
 						}
 					});
+					weatherForecast.getForecast(context, id);
 				}
 			}
 		} catch (Exception ex) {
@@ -150,11 +147,21 @@ public class KumamonForecastWidget extends WidgetBase {
 		}
 	}
 
-	public void updateAppWidget(Context context, int appWidgetId) {
+	public static void updateAppWidget(Context context, int appWidgetId,
+			WeatherForecast weatherForecast) {
 		try {
 			Log.i(TAG, "updateAppWidget - " + String.valueOf(appWidgetId));
+			// ボタンが押された時に発行されるインテントを準備する
+			Intent intent = new Intent(context, ForecastWidgetConfigure.class);
+			intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+			intent.putExtra(APPWIDGET_CALLER, APPWIDGET_NORMAL);
+			intent.setAction(APPWIDGET_CONFIGURE);
+			PendingIntent pendingIntent = PendingIntent.getActivity(context,
+					appWidgetId, intent, 0);
 			RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
 					R.layout.widget_forecast_ics);
+			remoteViews.setOnClickPendingIntent(R.id.forecast_icon_ImageView,
+					pendingIntent);
 
 			Intent stackViewIntent = new Intent(context,
 					ForecastWidgetService.class);
@@ -166,16 +173,6 @@ public class KumamonForecastWidget extends WidgetBase {
 			stackViewIntent.setData(Uri.parse(stackViewIntent
 					.toUri(Intent.URI_INTENT_SCHEME)));
 			remoteViews.setRemoteAdapter(R.id.forecast_widget_StackView, stackViewIntent);
-
-			// ボタンが押された時に発行されるインテントを準備する
-			Intent congigIntent = new Intent(context, jp.widgets.kumamon.forecast.ForecastWidgetConfigure.class);
-			congigIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-			congigIntent.putExtra(APPWIDGET_CALLER, APPWIDGET_STACK);
-			congigIntent.setAction(APPWIDGET_CONFIGURE);
-			PendingIntent pendingIntent = PendingIntent.getActivity(context,
-					appWidgetId, congigIntent, 0);
-			remoteViews.setOnClickPendingIntent(R.id.forecast_icon_ImageView,
-					pendingIntent);
 
 			AppWidgetManager appWidgetManager = AppWidgetManager
 					.getInstance(context);
@@ -222,6 +219,13 @@ public class KumamonForecastWidget extends WidgetBase {
 						int id = hash.get(LOCATEID,
 								String.valueOf(appWidgetId), INIT_ID);
 						final WeatherForecast weatherForecast = new WeatherForecast();
+						weatherForecast.setOnPostExecute(new OnPostExecute() {
+							@Override
+							public void onPostExecute() {
+								updateAppWidget(context, appWidgetId,
+										weatherForecast);
+							}
+						});
 						weatherForecast.getForecast(context, id);
 					}
 				}
