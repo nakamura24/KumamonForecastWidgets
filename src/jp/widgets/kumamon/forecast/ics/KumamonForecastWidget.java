@@ -154,7 +154,7 @@ public class KumamonForecastWidget extends WidgetBase {
 			// ボタンが押された時に発行されるインテントを準備する
 			Intent intent = new Intent(context, ForecastWidgetConfigure.class);
 			intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-			intent.putExtra(APPWIDGET_CALLER, APPWIDGET_NORMAL);
+			intent.putExtra(APPWIDGET_CALLER, APPWIDGET_STACK);
 			intent.setAction(APPWIDGET_CONFIGURE);
 			PendingIntent pendingIntent = PendingIntent.getActivity(context,
 					appWidgetId, intent, 0);
