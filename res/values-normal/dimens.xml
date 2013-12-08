@@ -1,7 +1,8 @@
 <resources>
 
-    <!-- Default screen margins, per the Android Design guidelines. -->
+    <!-- Normal screen margins, per the Android Design guidelines. -->
     <dimen name="forecast_location_textSize">12sp</dimen>
+    <dimen name="forecast_vertical_margin">-4dp</dimen>
     <dimen name="forecast_date_textSize">18sp</dimen>
     <dimen name="forecast_temp_textSize">18sp</dimen>
     <dimen name="forecast_probability_textSize">16sp</dimen>

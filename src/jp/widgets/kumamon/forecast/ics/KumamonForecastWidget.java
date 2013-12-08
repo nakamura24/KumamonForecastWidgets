@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import jp.library.weatherforecast.StaticHash;
 import jp.library.weatherforecast.WeatherForecast;
 import jp.library.weatherforecast.WeatherForecast.*;
-import jp.widgets.kumamon.forecast.ForecastWidgetConfigure;
 import jp.widgets.kumamon.forecast.R;
 import jp.widgets.kumamon.lib.*;
 import static jp.widgets.kumamon.forecast.ForecastWidgetConstant.*;
@@ -124,8 +123,9 @@ public class KumamonForecastWidget extends WidgetBase {
 					final int appWidgetId = extras.getInt(
 							AppWidgetManager.EXTRA_APPWIDGET_ID,
 							AppWidgetManager.INVALID_APPWIDGET_ID);
-					int id = extras.getInt(LOCATEID, INIT_ID);
 					StaticHash hash = new StaticHash(context);
+					int id = extras.getInt(LOCATEID,
+							hash.get(LOCATEID, INIT_ID));
 					hash.put(LOCATEID, String.valueOf(appWidgetId), id);
 					Log.d(TAG,
 							"CONFIG_DONE appWidgetId="
@@ -154,7 +154,6 @@ public class KumamonForecastWidget extends WidgetBase {
 			// ボタンが押された時に発行されるインテントを準備する
 			Intent intent = new Intent(context, ForecastWidgetConfigure.class);
 			intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-			intent.putExtra(APPWIDGET_CALLER, APPWIDGET_STACK);
 			intent.setAction(APPWIDGET_CONFIGURE);
 			PendingIntent pendingIntent = PendingIntent.getActivity(context,
 					appWidgetId, intent, 0);
@@ -172,7 +171,8 @@ public class KumamonForecastWidget extends WidgetBase {
 			// into the data so that the extras will not be ignored.
 			stackViewIntent.setData(Uri.parse(stackViewIntent
 					.toUri(Intent.URI_INTENT_SCHEME)));
-			remoteViews.setRemoteAdapter(R.id.forecast_widget_StackView, stackViewIntent);
+			remoteViews.setRemoteAdapter(R.id.forecast_widget_StackView,
+					stackViewIntent);
 
 			AppWidgetManager appWidgetManager = AppWidgetManager
 					.getInstance(context);

@@ -16,55 +16,56 @@ public final class R {
          */
         public static final int activity_horizontal_margin=0x7f050000;
         public static final int activity_vertical_margin=0x7f050001;
-        public static final int forecast_date_textSize=0x7f050004;
-        public static final int forecast_ics_date_textSize=0x7f050008;
-        public static final int forecast_ics_location_textSize=0x7f050007;
-        public static final int forecast_ics_probability_textSize=0x7f05000a;
-        public static final int forecast_ics_temp_textSize=0x7f050009;
-        public static final int forecast_item_horizontal_margin=0x7f05000b;
-        public static final int forecast_item_vertical_margin=0x7f05000c;
-        /**  Default screen margins, per the Android Design guidelines. 
- Default screen margins, per the Android Design guidelines. 
- Default screen margins, per the Android Design guidelines. 
+        public static final int forecast_date_textSize=0x7f050005;
+        public static final int forecast_ics_date_textSize=0x7f050009;
+        public static final int forecast_ics_location_textSize=0x7f050008;
+        public static final int forecast_ics_probability_textSize=0x7f05000b;
+        public static final int forecast_ics_temp_textSize=0x7f05000a;
+        public static final int forecast_item_horizontal_margin=0x7f05000c;
+        public static final int forecast_item_vertical_margin=0x7f05000d;
+        /**  Large screen margins, per the Android Design guidelines. 
+ Normal screen margins, per the Android Design guidelines. 
+ x-Large screen margins, per the Android Design guidelines. 
          */
         public static final int forecast_location_textSize=0x7f050003;
         public static final int forecast_paddingLeft=0x7f050002;
-        public static final int forecast_probability_textSize=0x7f050006;
-        public static final int forecast_temp_textSize=0x7f050005;
+        public static final int forecast_probability_textSize=0x7f050007;
+        public static final int forecast_temp_textSize=0x7f050006;
+        public static final int forecast_vertical_margin=0x7f050004;
     }
     public static final class drawable {
         public static final int forecast_icon=0x7f020000;
         public static final int ic_launcher=0x7f020001;
-        public static final int weather01=0x7f020002;
-        public static final int weather02=0x7f020003;
-        public static final int weather03=0x7f020004;
-        public static final int weather04=0x7f020005;
-        public static final int weather05=0x7f020006;
-        public static final int weather06=0x7f020007;
-        public static final int weather07=0x7f020008;
-        public static final int weather08=0x7f020009;
-        public static final int weather09=0x7f02000a;
-        public static final int weather10=0x7f02000b;
-        public static final int weather11=0x7f02000c;
-        public static final int weather12=0x7f02000d;
-        public static final int weather13=0x7f02000e;
-        public static final int weather14=0x7f02000f;
-        public static final int weather15=0x7f020010;
-        public static final int weather16=0x7f020011;
-        public static final int weather17=0x7f020012;
-        public static final int weather18=0x7f020013;
-        public static final int weather19=0x7f020014;
-        public static final int weather20=0x7f020015;
-        public static final int weather21=0x7f020016;
-        public static final int weather22=0x7f020017;
-        public static final int weather23=0x7f020018;
-        public static final int weather24=0x7f020019;
-        public static final int weather25=0x7f02001a;
-        public static final int weather26=0x7f02001b;
-        public static final int weather27=0x7f02001c;
-        public static final int weather28=0x7f02001d;
-        public static final int weather29=0x7f02001e;
-        public static final int weather30=0x7f02001f;
+        public static final int icon01=0x7f020002;
+        public static final int icon02=0x7f020003;
+        public static final int icon03=0x7f020004;
+        public static final int icon04=0x7f020005;
+        public static final int icon05=0x7f020006;
+        public static final int icon06=0x7f020007;
+        public static final int icon07=0x7f020008;
+        public static final int icon08=0x7f020009;
+        public static final int icon09=0x7f02000a;
+        public static final int icon10=0x7f02000b;
+        public static final int icon11=0x7f02000c;
+        public static final int icon12=0x7f02000d;
+        public static final int icon13=0x7f02000e;
+        public static final int icon14=0x7f02000f;
+        public static final int icon15=0x7f020010;
+        public static final int icon16=0x7f020011;
+        public static final int icon17=0x7f020012;
+        public static final int icon18=0x7f020013;
+        public static final int icon19=0x7f020014;
+        public static final int icon20=0x7f020015;
+        public static final int icon21=0x7f020016;
+        public static final int icon22=0x7f020017;
+        public static final int icon23=0x7f020018;
+        public static final int icon24=0x7f020019;
+        public static final int icon25=0x7f02001a;
+        public static final int icon26=0x7f02001b;
+        public static final int icon27=0x7f02001c;
+        public static final int icon28=0x7f02001d;
+        public static final int icon29=0x7f02001e;
+        public static final int icon30=0x7f02001f;
     }
     public static final class id {
         public static final int forecast_ImageView=0x7f080012;

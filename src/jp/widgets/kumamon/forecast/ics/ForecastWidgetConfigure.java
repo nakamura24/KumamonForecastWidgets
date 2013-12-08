@@ -7,9 +7,10 @@
  * You may obtain a copy of the License at
  * 		http://creativecommons.org/licenses/by-nc-sa/2.1/jp/legalcode
  */
-package jp.widgets.kumamon.forecast;
+package jp.widgets.kumamon.forecast.ics;
 
 import jp.library.weatherforecast.WeatherForecast;
+import jp.widgets.kumamon.forecast.R;
 import jp.widgets.kumamon.lib.*;
 import static jp.widgets.kumamon.forecast.ForecastWidgetConstant.*;
 import android.app.Activity;
