@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="jp.widgets.kumamon.forecast"
-    android:versionCode="5"
-    android:versionName="1.0.5" >
+    android:versionCode="6"
+    android:versionName="1.0.6" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -32,6 +32,14 @@
             android:name="jp.widgets.kumamon.forecast.KumamonForecastWidget$WidgetService"
             android:exported="false" />
 
+        <activity
+            android:name="jp.widgets.kumamon.forecast.ForecastWidgetConfigure"
+            android:theme="@style/Theme.Dialog" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
         <receiver
             android:name="jp.widgets.kumamon.forecast.ics.KumamonForecastWidget"
             android:label="@string/forecast_widget_ics" >
@@ -53,8 +61,7 @@
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <activity
-            android:name="jp.widgets.kumamon.forecast.ForecastWidgetConfigure"
-            android:exported="false"
+            android:name="jp.widgets.kumamon.forecast.ics.ForecastWidgetConfigure"
             android:theme="@style/Theme.Dialog" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
